@@ -1,98 +1,122 @@
-Installation and Setup
-Prerequisites
-Node.js (v14 or later).
-MongoDB (local or cloud instance).
-Package manager (npm or yarn).
-Steps to Run Locally
-Clone the repository:
 
 
 
-git clone https://github.com/mayurpatil2000/Simple-URL-Shortener-API1
-cd Simple-URL-Shortener-API1
+## **Installation and Setup**
 
+### **Prerequisites**
+Before running the application, ensure you have the following software installed:
 
-Install dependencies:
-npm install
+- **Node.js** (v14 or later)
+- **MongoDB** (local or cloud instance)
+- **Package manager** (npm or yarn)
 
+### **Steps to Run Locally**
 
-Create an .env file for environment variables:
+1. **Clone the repository:**
 
-MONGO_URI=mongodb://localhost:27017/
-PORT=8001
-Start the MongoDB server (if using a local instance).
+   ```bash
+   git clone https://github.com/mayurpatil2000/Simple-URL-Shortener-API1
+   ```
 
-Start the application:
-npm start
+2. **Navigate into the project directory:**
 
-The application will run at http://localhost:8001.
+   ```bash
+   cd Simple-URL-Shortener-API1
+   ```
 
+3. **Install dependencies:**
 
-API Endpoints
+   ```bash
+   npm install
+   ```
 
-1. POST /url
-Description: Generate a short URL.
+4. **Create an `.env` file** in the root of the project directory and add the following environment variables:
 
-Request Body:
+   ```bash
+   MONGO_URI=mongodb://localhost:27017/short-url
+   PORT=8001
+   ```
 
-json
-Copy code
-{
-    "url": "https://example.com"
-}
-Response:
+   - **MONGO_URI**: URL to your MongoDB instance (local or cloud).
+   - **PORT**: The port on which the application will run.
 
-json
-Copy code
-{
-    "id": "shortId123"
-}
-Errors:
+5. **Start the MongoDB server** (if using a local instance).
 
-400 Bad Request: URL is missing.
-500 Internal Server Error: Unexpected server error.
+   If you're using MongoDB locally, ensure it's running on the specified URI.
 
+6. **Start the application:**
 
-2. GET /:shortId
+   ```bash
+   npm start
+   ```
 
-Description: Redirect to the original URL.
+   The application will run at `http://localhost:8001`.
 
-Path Parameters:
+---
 
-shortId: The shortened URL ID.
-Response:
+## **API Endpoints**
 
-Redirects the user to the original URL.
-Errors:
+### 1. **POST /url**
+- **Description**: Generate a short URL from a provided long URL.
+  
+- **Request Body**:
 
-404 Not Found: Short URL not found.
-500 Internal Server Error: Unexpected server error.
+   ```json
+   {
+       "url": "https://example.com"
+   }
+   ```
 
+- **Response**:
 
+   ```json
+   {
+       "id": "shortId123"
+   }
+   ```
 
-3. GET /url/analytics/:shortId
+- **Errors**:
 
-Description: Fetch usage statistics for a shortened URL.
+   - **400 Bad Request**: If the URL is missing.
+   - **500 Internal Server Error**: If an unexpected server error occurs.
 
-Path Parameters:
+---
 
-shortId: The shortened URL ID.
-Response:
+### 2. **GET /:shortId**
+- **Description**: Redirects to the original URL using the shortened URL ID.
 
-json
-Copy code
-{
-    "totalClicks": 10,
-    "analytics": [
-        { "timestamp": 1699999999 },
-        { "timestamp": 1700000000 }
-    ]
-}
-Errors:
+- **Path Parameters**:
+   - `shortId`: The shortened URL ID.
 
-404 Not Found: Short URL not found.
-500 Internal Server Error: Unexpected server error.
+- **Response**:
+   - Redirects the user to the original URL.
 
+- **Errors**:
+   - **404 Not Found**: If the short URL is not found.
+   - **500 Internal Server Error**: If an unexpected server error occurs.
 
+---
 
+### 3. **GET /url/analytics/:shortId**
+- **Description**: Fetch usage statistics for a shortened URL, including the number of clicks and the timestamp of each visit.
 
+- **Path Parameters**:
+   - `shortId`: The shortened URL ID.
+
+- **Response**:
+
+   ```json
+   {
+       "totalClicks": 10,
+       "analytics": [
+           { "timestamp": 1699999999 },
+           { "timestamp": 1700000000 }
+       ]
+   }
+   ```
+
+- **Errors**:
+   - **404 Not Found**: If the short URL is not found.
+   - **500 Internal Server Error**: If an unexpected server error occurs.
+
+---
